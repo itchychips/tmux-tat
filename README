@@ -1,0 +1,26 @@
+A collection of tmux scripts to handle multiple tmux servers.
+
+tat - tmux attach wrapper
+    Usage: tat session_name [socket_name]
+
+tnew - tmux new-session wrapper
+    Usage: tnew session_name [socket_name]
+
+tls - tmux list-session wrapper
+    Usage: tls
+
+Given a session_name, the socket_name (see `man tmux` for the -L option) will
+create or attach to a different socket name.  If socket_name is not given, then
+"default" is assumed.
+
+tat will attach to the given session name, obeying tmux's naming rules (such as
+shortened session name).  It will search all tmux servers based on the sockets
+listed in "$TMUX_TMPDIR/tmux-$(id -g)" (TMUX_TMPDIR is set to /tmp by default).
+It will attach to the first session it finds.
+
+tnew will create a new session.  This is a quick wrapper that is shorter than
+`tmux [-L socket_name] new-session session_name`.
+
+tls will loop through all found servers and print their sessions.  If a socket
+is not currently hosting a server, it will still print an error message from
+tmux.

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+CURRENT_USER_ID="$(id -g)"
+# Assume this is absolute path
+TMUX_SOCKET_DIR="${TMUX_TMPDIR:-/tmp}/tmux-$CURRENT_USER_ID"
+
+if [[ ! -d $TMUX_SOCKET_DIR ]]; then
+    echo "No tmux directory found at $TMUX_SOCKET_DIR." 1>&2
+    exit 1
+fi
+
+for maybe_socket in "$TMUX_SOCKET_DIR"/*; do
+    if [[ ! -S "$maybe_socket" ]]; then
+        continue
+    fi
+    socket="$maybe_socket"
+    echo "Socket $(basename "$socket"):"
+    tmux -S "$socket" list-session 2>&1 | sed 's/^/    /' || true
+done

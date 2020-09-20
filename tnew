@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+TMUX_SESSION_NAME="$1"
+shift
+TMUX_SOCKET_NAME="${1:-default}"
+
+tmux -L "$TMUX_SOCKET_NAME" new-session -t "$TMUX_SESSION_NAME"

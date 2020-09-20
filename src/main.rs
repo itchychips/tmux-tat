@@ -1,20 +1,9 @@
-#![allow(unused_imports)]
-
-use std::error::Error;
-use std::process::Command;
-use std::process::Stdio;
-use std::process::ChildStdout;
-use std::path::Path;
-use std::path::PathBuf;
-use std::io::Read;
-use std::os::unix::fs::FileTypeExt;
-use std::os::unix::io::AsRawFd;
-use std::os::unix::io::FromRawFd;
-use std::ffi::OsStr;
 use std::ffi::OsString;
-use std::io::{self, Write};
-use std::fs::File;
 use std::fs::DirEntry;
+use std::io::{self, Read};
+use std::os::unix::fs::FileTypeExt;
+use std::path::PathBuf;
+use std::process::Command;
 
 use libc::getuid;
 
